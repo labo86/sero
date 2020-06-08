@@ -1,0 +1,32 @@
+{
+  "name": "@labo86/sero",
+  "version": "1.0.0",
+  "description": "Una fantástica nueva biblioteca",
+  "author": {
+    "name": "Edwin Rodríguez-León",
+    "url": "http://www.edwin.cl"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@jest/globals": "^26.0.1",
+    "babel-jest": "^26.0.1",
+    "babel-loader": "^8.1.0",
+    "jest": "^26.0.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
+    }
+  }
+}
