@@ -1,6 +1,6 @@
 labo86\sero
 ========
-Una mini biblioteca para obtener un [query string](https://en.wikipedia.org/wiki/Query_string) como un objeto.
+Una biblioteca para (de)serializar forms o elements HTML arbitrarios
 
 [![Latest Stable Version](https://img.shields.io/npm/v/@labo86/sero)](https://www.npmjs.com/package/@labo86/sero)
 [![Total Downloads](https://img.shields.io/npm/dt/@labo86/sero)](https://www.npmjs.com/package/@labo86/sero)
