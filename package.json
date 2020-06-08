@@ -1,6 +1,6 @@
 {
   "name": "@labo86/sero",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Una biblioteca para (de)serializar forms o elements HTML arbitrarios",
   "author": {
     "name": "Edwin Rodríguez-León",

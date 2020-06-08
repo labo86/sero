@@ -110,7 +110,6 @@ __webpack_require__.d(__webpack_exports__, "get", function() { return /* reexpor
 /**
  * Esta es la clase base de todos los elementos sero.
  * Lo que hace es encapsular un HTMLElement y definir una propiedad de objeto con la cual se puede interactuar.
- * Este elemento necesita que el método {@link ElementBase.setValueProperty} para establecer el valor.
  * El método de uso de este elemento es el siguiente:
  *
  * ```
@@ -123,6 +122,8 @@ __webpack_require__.d(__webpack_exports__, "get", function() { return /* reexpor
  * element.value = 'something';
  * console.log(element.value);
  * ```
+ * También se puede heredar y sobre-escribir los métodos ElementBase.getValue() y ElementBase.setValue() para
+ * cambiar el comportamiento de la propiedad valor
  * @property {HTMLElement} element El elemento HTML que se maneja.
  * @property value El valor con el que se interactúa.
  */
@@ -133,6 +134,11 @@ class ElementBase_ElementBase {
    */
   constructor(element) {
     this.element = element;
+    this.setValueProperty({
+      get: this.getValue,
+      set: this.setValue,
+      configurable: true
+    });
   }
   /**
    * El nombre es el atributo HTML <strong>data-sero-name</strong> o <strong>name</strong> en su defecto.
@@ -147,6 +153,14 @@ class ElementBase_ElementBase {
     if (this.element.hasAttribute('name')) return this.element.getAttribute('name');
     if (this.element.hasAttribute('data-sero-name')) return this.element.getAttribute('data-sero-name');
     return null;
+  }
+
+  getValue() {
+    return null;
+  }
+
+  setValue(value) {
+    ;
   }
   /**
    * Este método establece una propiedad de objeto value.
@@ -211,23 +225,12 @@ class ElementBase_ElementBase {
  */
 
 class ElementPlain_ElementPlain extends ElementBase_ElementBase {
-  /**
-   * @param {HTMLElement} element
-   */
-  constructor(element) {
-    super(element);
-    this.setValueProperty({
-      get() {
-        /** @this {ElementPlain} */
-        return this.element.innerHTML;
-      },
+  getValue() {
+    return this.element.innerHTML;
+  }
 
-      set(value) {
-        /** @this {ElementPlain} */
-        this.element.innerHTML = value;
-      }
-
-    });
+  setValue(value) {
+    this.element.innerHTML = value;
   }
 
 }
@@ -321,21 +324,12 @@ function registerType(name, builder_callback) {
  */
 
 class ElementValued_ElementValued extends ElementBase_ElementBase {
-  /**
-   * @param {HTMLElement} element
-   */
-  constructor(element) {
-    super(element);
-    this.setValueProperty({
-      get() {
-        return this.element.value;
-      },
+  getValue() {
+    return this.element.value;
+  }
 
-      set(value) {
-        this.element.value = value;
-      }
-
-    });
+  setValue(value) {
+    this.element.value = value;
   }
 
 }
@@ -359,22 +353,20 @@ class ElementRadio_ElementRadio extends ElementBase_ElementBase {
   constructor(element) {
     super(element);
     this.radios = document.getElementsByName(this.getName());
-    this.setValueProperty({
-      get() {
-        for (var radio of this.radios) {
-          if (radio.checked) return radio.value;
-        }
+  }
 
-        return null;
-      },
+  getValue() {
+    for (var radio of this.radios) {
+      if (radio.checked) return radio.value;
+    }
 
-      set(value) {
-        for (var radio of this.radios) {
-          radio.checked = radio.value === value;
-        }
-      }
+    return null;
+  }
 
-    });
+  setValue(value) {
+    for (var radio of this.radios) {
+      radio.checked = radio.value === value;
+    }
   }
 
 }
@@ -387,21 +379,12 @@ class ElementRadio_ElementRadio extends ElementBase_ElementBase {
  */
 
 class ElementCheckable_ElementCheckable extends ElementBase_ElementBase {
-  /**
-   * @param {HTMLElement} element
-   */
-  constructor(element) {
-    super(element);
-    this.setValueProperty({
-      get() {
-        return this.element.checked;
-      },
+  getValue() {
+    return this.element.checked;
+  }
 
-      set(value) {
-        this.element.checked = value;
-      }
-
-    });
+  setValue(value) {
+    this.element.checked = value;
   }
 
 }
@@ -430,16 +413,14 @@ class ElementAttribute_ElementAttribute extends ElementBase_ElementBase {
   constructor(element, attribute_name) {
     super(element);
     if (typeof attribute_name === 'string') this.attribute_name = attribute_name;else if (element.hasAttribute('data-sero-attribute-name')) this.attribute_name = element.getAttribute('data-sero-attribute-name');else throw "attribute not specified";
-    this.setValueProperty({
-      get() {
-        return this.element.getAttribute(this.attribute_name);
-      },
+  }
 
-      set(value) {
-        this.element.setAttribute(this.attribute_name, value);
-      }
+  getValue() {
+    return this.element.getAttribute(this.attribute_name);
+  }
 
-    });
+  setValue(value) {
+    this.element.setAttribute(this.attribute_name, value);
   }
 
 }
@@ -452,21 +433,12 @@ class ElementAttribute_ElementAttribute extends ElementBase_ElementBase {
  */
 
 class ElementInputNumber_ElementInputNumber extends ElementBase_ElementBase {
-  /**
-   * @param {HTMLElement} element
-   */
-  constructor(element) {
-    super(element);
-    this.setValueProperty({
-      get() {
-        return parseInt(this.element.value);
-      },
+  getValue() {
+    return parseInt(this.element.value);
+  }
 
-      set(value) {
-        this.element.value = value.toString();
-      }
-
-    });
+  setValue(value) {
+    this.element.value = value.toString();
   }
 
 }
@@ -494,31 +466,22 @@ class ElementInputNumber_ElementInputNumber extends ElementBase_ElementBase {
  */
 
 class ElementObject_ElementObject extends ElementBase_ElementBase {
-  /**
-   * @param {HTMLElement} element
-   */
-  constructor(element) {
-    super(element);
-    this.setValueProperty({
-      get() {
-        var result = {};
+  getValue() {
+    var result = {};
 
-        for (var child of this.iterateObjectElements()) {
-          var name = child.getName();
-          if (name !== null) result[name] = child.value;
-        }
+    for (var child of this.iterateObjectElements()) {
+      var name = child.getName();
+      if (name !== null) result[name] = child.value;
+    }
 
-        return result;
-      },
+    return result;
+  }
 
-      set(value) {
-        for (var child of this.iterateObjectElements()) {
-          var name = child.getName();
-          if (name !== null && value.hasOwnProperty(name)) child.value = value[name];
-        }
-      }
-
-    });
+  setValue(value) {
+    for (var child of this.iterateObjectElements()) {
+      var name = child.getName();
+      if (name !== null && value.hasOwnProperty(name)) child.value = value[name];
+    }
   }
 
 }
@@ -557,27 +520,31 @@ class ElementArray_ElementArray extends ElementBase_ElementBase {
     super(element);
     this.item_template_id = element.getAttribute('data-sero-item');
     this.item_template = document.getElementById(this.item_template_id).content.firstElementChild;
-    this.setValueProperty({
-      get() {
-        var elements = [];
+  }
 
-        for (var child of this.iterateElements()) {
-          elements.push(child.value);
-        }
+  getValue() {
+    var elements = [];
 
-        return elements;
-      },
+    for (var child of this.iterateElements()) {
+      elements.push(child.value);
+    }
 
-      set(values) {
-        this.element.innerHTML = '';
-        if (!Array.isArray(values)) return;
+    return elements;
+  }
+  /**
+   * Asigna los valores.
+   * Notar que debe ser array
+   * @param {Array} values
+   */
 
-        for (var value of values) {
-          this.add(value);
-        }
-      }
 
-    });
+  setValue(values) {
+    this.element.innerHTML = '';
+    if (!Array.isArray(values)) return;
+
+    for (var value of values) {
+      this.add(value);
+    }
   }
   /**
    * Agrega un elemento hijo.
@@ -604,17 +571,8 @@ class ElementArray_ElementArray extends ElementBase_ElementBase {
  */
 
 class ElementInputFile_ElementInputFile extends ElementBase_ElementBase {
-  /**
-   * @param {HTMLElement} element
-   */
-  constructor(element) {
-    super(element);
-    this.setValueProperty({
-      get() {
-        return this.element.files.length > 0 ? this.e.files[0] : null;
-      }
-
-    });
+  getValue() {
+    return this.element.files.length > 0 ? this.e.files[0] : null;
   }
 
 }
