@@ -20,8 +20,8 @@ Una biblioteca para (de)serializar forms o elements HTML arbitrarios
 ## Ejemplos
 
  - [valor de input text a contenido de un div](https://codepen.io/edwrodrig/pen/ExPjZGw?editors=1010)
- - [deserializar json en textarea a input texts](https://codepen.io/edwrodrig/pen/LYGVyYY?editors=1010)
- - [obtener un objeto desde un div](https://codepen.io/edwrodrig/pen/gOPpWGx?editors=1010)
+ - [json a objeto con input text](https://codepen.io/edwrodrig/pen/LYGVyYY?editors=1010)
+ - [manejo con atributos](https://codepen.io/edwrodrig/pen/xxZwPjq?editors=1010)
  - [agregar y obtener elementos desde una tabla](https://codepen.io/edwrodrig/pen/VweLbgb?editors=1010)
  - [más ejemplos](https://codepen.io/collection/nJkLEm)
 
