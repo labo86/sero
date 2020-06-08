@@ -10,7 +10,7 @@ import {ElementBase} from "./ElementBase";
 export class ElementInputFile extends ElementBase {
 
     getValue() {
-        return this.element.files.length > 0 ? this.e.files[0] : null;
+        return this.element.files.length > 0 ? this.element.files[0] : null;
     }
 
 }
