@@ -17,11 +17,13 @@ Una mini biblioteca para obtener un [query string](https://en.wikipedia.org/wiki
 <script src="https://unpkg.com/@labo86/sero@latest/dist/sero.min.js"></script>
 ```
 
-## Uso
-```js
-let something = sero.get_something();
-console.log(something);
-```
+## Ejemplos
+
+ - [valor de input text a contenido de un div](https://codepen.io/edwrodrig/pen/ExPjZGw?editors=1010)
+ - [deserializar json en textarea a input texts](https://codepen.io/edwrodrig/pen/LYGVyYY?editors=1010)
+ - [obtener un objeto desde un div](https://codepen.io/edwrodrig/pen/gOPpWGx?editors=1010)
+ - [agregar y obtener elementos desde una tabla](https://codepen.io/edwrodrig/pen/VweLbgb?editors=1010)
+ - [más ejemplos](https://codepen.io/collection/nJkLEm)
 
 ## Notas
   - Este proyecto esta pensado para ser trabajado usando [PhpStorm](https://www.jetbrains.com/phpstorm).
