@@ -6,21 +6,13 @@ import {ElementBase} from "./ElementBase";
  * Esto es posible porque lo que se usa como contenedor de la variable es {@link https://developer.mozilla.org/es/docs/Web/API/Element/innerHTML innerHTML}
  */
 export class ElementPlain extends ElementBase {
-    /**
-     * @param {HTMLElement} element
-     */
-    constructor(element) {
-        super(element);
-        this.setValueProperty({
-            get() {
-                /** @this {ElementPlain} */
-                return this.element.innerHTML;
-            },
-            set(value) {
-                /** @this {ElementPlain} */
-                this.element.innerHTML = value;
-            }
-        });
+
+    getValue() {
+        return this.element.innerHTML;
+    }
+
+    setValue(value) {
+        this.element.innerHTML = value;
     }
 
 }

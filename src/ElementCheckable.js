@@ -6,19 +6,12 @@ import {ElementBase} from "./ElementBase";
  * @property {HTMLInputElement} element
  */
 export class ElementCheckable extends ElementBase {
-    /**
-     * @param {HTMLElement} element
-     */
-    constructor(element) {
-        super(element);
 
-        this.setValueProperty({
-            get() {
-                return this.element.checked;
-            },
-            set(value) {
-                this.element.checked = value;
-            }
-        });
+    getValue() {
+        return this.element.checked;
+    }
+
+    setValue(value) {
+        this.element.checked = value;
     }
 }

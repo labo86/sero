@@ -34,24 +34,28 @@ export class ElementArray extends ElementBase {
 
         this.item_template_id = element.getAttribute('data-sero-item');
         this.item_template = document.getElementById(this.item_template_id).content.firstElementChild;
+    }
 
-        this.setValueProperty({
-            get() {
-                let elements = [];
-                for (let child of this.iterateElements() ) {
-                    elements.push(child.value);
-                }
-                return elements;
-            },
-            set(values) {
-                this.element.innerHTML = '';
+    getValue() {
+        let elements = [];
+        for (let child of this.iterateElements() ) {
+            elements.push(child.value);
+        }
+        return elements;
+    }
 
-                if (!Array.isArray(values)) return;
-                for (let value of values) {
-                    this.add(value);
-                }
-            }
-        });
+    /**
+     * Asigna los valores.
+     * Notar que debe ser array
+     * @param {Array} values
+     */
+    setValue(values) {
+        this.element.innerHTML = '';
+
+        if (!Array.isArray(values)) return;
+        for (let value of values) {
+            this.add(value);
+        }
     }
 
     /**

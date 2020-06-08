@@ -22,29 +22,21 @@ import {ElementBase} from "./ElementBase";
  */
 export class ElementObject extends ElementBase {
 
-    /**
-     * @param {HTMLElement} element
-     */
-    constructor(element) {
-        super(element);
+    getValue() {
+        let result = {};
+        for (let child of this.iterateObjectElements()) {
+            let name = child.getName();
+            if (name !== null)
+                result[name] = child.value;
+        }
+        return result;
+    }
 
-        this.setValueProperty({
-            get() {
-                let result = {};
-                for (let child of this.iterateObjectElements()) {
-                    let name = child.getName();
-                    if (name !== null)
-                        result[name] = child.value;
-                }
-                return result;
-            },
-            set(value) {
-                for (let child of this.iterateObjectElements()) {
-                    let name = child.getName();
-                    if (name !== null && value.hasOwnProperty(name))
-                        child.value = value[name];
-                }
-            }
-        });
+    setValue(value) {
+        for (let child of this.iterateObjectElements()) {
+            let name = child.getName();
+            if (name !== null && value.hasOwnProperty(name))
+                child.value = value[name];
+        }
     }
 }

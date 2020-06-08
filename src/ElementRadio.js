@@ -19,20 +19,19 @@ export class ElementRadio extends ElementBase {
         super(element);
 
         this.radios = document.getElementsByName(this.getName());
+    }
 
-        this.setValueProperty({
-            get() {
-                for (let radio of this.radios) {
-                    if (radio.checked)
-                        return radio.value;
+    getValue() {
+        for (let radio of this.radios) {
+            if (radio.checked)
+                return radio.value;
 
-                }
-                return null;
-            },
-            set(value) {
-                for (let radio of this.radios)
-                    radio.checked = (radio.value === value);
-            }
-        });
+        }
+        return null;
+    }
+
+    setValue(value) {
+        for (let radio of this.radios)
+            radio.checked = (radio.value === value);
     }
 }

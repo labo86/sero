@@ -8,6 +8,8 @@ test("handle plain element", () => {
     let outVar = 'first';
 
     let element = sero.get('test');
+
+    expect(element.value).toEqual(null);
     element.setValueProperty({
        get() { return outVar; },
        set(value) { outVar = value; }

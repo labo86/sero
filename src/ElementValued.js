@@ -6,19 +6,12 @@ import {ElementBase} from "./ElementBase";
  * @property {HTMLInputElement} element
  */
 export class ElementValued extends ElementBase {
-    /**
-     * @param {HTMLElement} element
-     */
-    constructor(element) {
-        super(element);
 
-        this.setValueProperty({
-            get() {
-                return this.element.value;
-            },
-            set(value) {
-                this.element.value = value;
-            }
-        });
+    getValue() {
+        return this.element.value;
+    }
+
+    setValue(value) {
+        this.element.value = value;
     }
 }

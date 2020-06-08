@@ -3,7 +3,6 @@ import {get} from "./core";
 /**
  * Esta es la clase base de todos los elementos sero.
  * Lo que hace es encapsular un HTMLElement y definir una propiedad de objeto con la cual se puede interactuar.
- * Este elemento necesita que el método {@link ElementBase.setValueProperty} para establecer el valor.
  * El método de uso de este elemento es el siguiente:
  *
  * ```
@@ -16,6 +15,8 @@ import {get} from "./core";
  * element.value = 'something';
  * console.log(element.value);
  * ```
+ * También se puede heredar y sobre-escribir los métodos ElementBase.getValue() y ElementBase.setValue() para
+ * cambiar el comportamiento de la propiedad valor
  * @property {HTMLElement} element El elemento HTML que se maneja.
  * @property value El valor con el que se interactúa.
  */
@@ -25,6 +26,12 @@ export class ElementBase {
      */
     constructor(element) {
         this.element = element;
+
+        this.setValueProperty({
+            get : this.getValue,
+            set : this.setValue,
+            configurable: true
+        });
     }
 
     /**
@@ -43,6 +50,10 @@ export class ElementBase {
 
         return null;
     }
+
+    getValue() { return null; }
+
+    setValue(value) {;}
 
     /**
      * Este método establece una propiedad de objeto value.

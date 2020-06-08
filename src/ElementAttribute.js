@@ -28,14 +28,13 @@ export class ElementAttribute extends ElementBase {
             this.attribute_name = element.getAttribute('data-sero-attribute-name')
         else
             throw "attribute not specified";
+    }
 
-        this.setValueProperty({
-            get() {
-                return this.element.getAttribute(this.attribute_name);
-            },
-            set(value) {
-                this.element.setAttribute(this.attribute_name, value);
-            }
-        });
+    getValue() {
+        return this.element.getAttribute(this.attribute_name);
+    }
+
+    setValue(value) {
+        this.element.setAttribute(this.attribute_name, value);
     }
 }
