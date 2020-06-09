@@ -47,13 +47,7 @@ export function getType(element) {
         if (element.tagName === 'INPUT') {
             let input_type = element.hasAttribute('type') ? element.getAttribute('type') : null;
 
-            if (input_type === null) return 'plain';
-            else if (input_type === 'text') return 'input_text';
-            else if (input_type === 'file') return 'input_file';
-            else if (input_type === 'number') return 'input_number';
-            else if (input_type === 'checkbox') return 'input_checkbox';
-            else if (input_type === 'radio' ) return 'input_radio';
-            else return 'input_text';
+            return getTypeFromInputType(input_type);
 
         } else if (element.tagName === 'TEXTAREA') {
             return 'input_text';
@@ -64,11 +58,28 @@ export function getType(element) {
         } else if ( element.tagName === 'SELECT' ) {
             return 'input_text';
 
+        } else if ( element.tagName === 'FORM' ) {
+            return 'object';
+
         } else {
             return 'plain';
         }
     }
+}
 
+/**
+ * Obtiene el tipo sero desde el input type del elemento
+ * @param {string|null} input_type
+ * @returns {string}
+ */
+function getTypeFromInputType(input_type) {
+    if (input_type === null) return 'plain';
+    else if (input_type === 'text') return 'input_text';
+    else if (input_type === 'file') return 'input_file';
+    else if (input_type === 'number') return 'input_number';
+    else if (input_type === 'checkbox') return 'input_checkbox';
+    else if (input_type === 'radio' ) return 'input_radio';
+    else return 'input_text';
 }
 
 /**

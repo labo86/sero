@@ -26,7 +26,7 @@ export class ElementObject extends ElementBase {
         let result = {};
         for (let child of this.iterateObjectElements()) {
             let name = child.getName();
-            if (name !== null)
+            if (name !== "")
                 result[name] = child.value;
         }
         return result;
@@ -35,7 +35,7 @@ export class ElementObject extends ElementBase {
     setValue(value) {
         for (let child of this.iterateObjectElements()) {
             let name = child.getName();
-            if (name !== null && value.hasOwnProperty(name))
+            if (value.hasOwnProperty(name))
                 child.value = value[name];
         }
     }

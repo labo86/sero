@@ -58,3 +58,24 @@ test("handle object element null", () => {
 
 
 });
+
+test("handle object element from form", () => {
+    document.body.innerHTML = `
+<form id="test">
+    <label>First name:</label><input type="text" name="name" value="Edwin"/><br/>
+    <label>Surname:</label><input type="text" name="surname" value="Rodríguez"/><br/>
+    </div>
+</form>
+    `;
+
+    let element = sero.get('test');
+    expect(
+        element.value).toEqual(
+        { name: 'Edwin', surname: 'Rodríguez'}
+    );
+
+    element.value =  { name: 'Some', surname: 'Surname'};
+
+    expect(element.value).toEqual( { name: 'Some', surname: 'Surname'});
+
+});
