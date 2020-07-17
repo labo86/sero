@@ -56,3 +56,31 @@ test("radio button checked", () => {
     expect(element.value).toEqual('big');
 
 });
+
+test("radio button multiple names in different forms", () => {
+    document.body.innerHTML = `
+    <form>
+        <input type="radio" id="side" name="side" value="small">
+        <input type="radio"           name="side" value="big" checked>
+    </form>
+    <form>
+        <input type="radio" id="other" name="side" value="small" checked>
+        <input type="radio"            name="side" value="big">
+    </form>`;
+
+    let element_1 = sero.get('side');
+    expect(element_1.value).toEqual('big');
+
+    let element_2 = sero.get('other');
+    expect(element_2.value).toEqual('small');
+
+    element_1.value = 'small';
+    element_2.value = 'big';
+
+    element_1 = sero.get('side');
+    expect(element_1.value).toEqual('small');
+
+    element_2 = sero.get('other');
+    expect(element_2.value).toEqual('big');
+
+});

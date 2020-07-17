@@ -3,8 +3,6 @@ import {ElementBase} from "./ElementBase";
 
 /**
  * Los radio buttons son reconocidos por el id de uno de sus elementos y asociados con otros por su atributo {@link ElementBase.getName() name}.
- * Por el momento no pueden haber más de un radio button con el mismo nombre por documento.
- * Se pretende en el futuro reducir esto al contexto de un form.
  *
  * La estrategia para manejar los radio buttons es obtener todos los radio buttons con un mismo nombre y guardarlos en una {@link ElementRadio.radios}.
  * Con tal arreglo se puede establecer y obtener el valor de los radio buttons en su conjunto.
@@ -17,8 +15,16 @@ export class ElementRadio extends ElementBase {
      */
     constructor(element) {
         super(element);
-
-        this.radios = document.getElementsByName(this.getName());
+        let radios = document.getElementsByName(this.getName());
+        if ( element.form instanceof HTMLFormElement ) {
+            this.radios = [];
+            for (let radio of radios) {
+                if ( radio.form === element.form )
+                    this.radios.push(radio);
+            }
+        } else {
+            this.radios = radios;
+        }
     }
 
     getValue() {
